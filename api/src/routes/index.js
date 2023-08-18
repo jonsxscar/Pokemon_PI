@@ -4,9 +4,13 @@ const { Router } = require('express');
 
 
 const router = Router();
+const pokemonRoutes = require('./pokemonRoutes'); // Importa las rutas de pokemons
+const typeRoutes = require('./typeRoutes'); // Importa las rutas de tipos
+
 
 // Configurar los routers
-// Ejemplo: router.use('/auth', authRouter);
+router.use('/pokemons', pokemonRoutes); // Asocia las rutas de pokemons
+router.use('/types', typeRoutes); // Asocia las rutas de tipos
 
-
-module.exports = router;
+//app
+module.exports = router; 
