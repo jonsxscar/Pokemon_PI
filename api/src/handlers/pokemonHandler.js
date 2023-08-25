@@ -1,8 +1,8 @@
 const {getAllPokemons,getPokemonById,getPokemonByName,postPokemon} = require('../controllers/pokemonControllers')
-//revisar
+
 const getPokemonNameHandler = async (req,res) =>{
     const {name} = req.query
-    console.log(name)
+    console.log(name)//prueba
     try {
         if(name){
             const response = await getPokemonByName(name)
@@ -33,6 +33,7 @@ const postPokemonHandler = async (req,res) =>{
     } catch (error) {
         res.status(400).json({error: error.message})
     }
+    console.log(postPokemonHandler)
 }
 
 

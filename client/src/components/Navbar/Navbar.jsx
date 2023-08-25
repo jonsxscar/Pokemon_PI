@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
 import style from "./Navbar.module.css";
+import logohome from "../../images/logolanding.png";
 
 export default function Navbar() {
   return (
@@ -10,7 +11,7 @@ export default function Navbar() {
         <span className={style.landinglink}>
           <img
             id="logoPoke"
-            src={`images/palanding.png`}
+            src={logohome}
             width="120"
             alt="landing"
           />

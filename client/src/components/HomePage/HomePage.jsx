@@ -1,20 +1,75 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Navbar from '../Navbar/Navbar';
-
+import Navbar from "../Navbar/Navbar";
+import Card from "../PokemonCard/Card";
+import Paginado from "../Paginado/paginado";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getPokemons,
+  filterCreated,
+  orderByNameOrStrengh,
+  getTypes,
+  removeDetail,
+  filterPokemonsByType,
+  reloadPokemons,
+} from "../../redux/action/action";
 //import random from "../../images/random.png";
 import style from "./HomePage.module.css";
 //import game from "../../images/game.png";
 
 export default function Home() {
+  const dispatch = useDispatch();
+  const allPokemons = useSelector((state) => state.pokemons);
+  const all = useSelector((state) => state.allPokemons);
+  const types = useSelector((state) => state.types);
+
+  const [pokLoaded, setPokLoaded] = useState(all.length ? true : false);
+  const [orden, setOrden] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pokemonsPerPage, setPokemonsPerPage] = useState(12);
+  const indexOfLastPokemon = currentPage * pokemonsPerPage;
+  const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage;
+  const currentPokemons = allPokemons.slice(
+    indexOfFirstPokemon,
+    indexOfLastPokemon
+  );
+
+  const paginado = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  useEffect(() => {
+    dispatch(removeDetail());
+    dispatch(getTypes());
+    if (!pokLoaded) {
+      dispatch(getPokemons());
+    }
+  }, [pokLoaded, dispatch]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [allPokemons.length, setCurrentPage]);
+
+  function handleClick(e) {
+    e.preventDefault();
+    dispatch(reloadPokemons());
+  }
+
   return (
     <div className={style.home}>
-        <Navbar />
-      <button>Reload all img</button>
+      <Navbar />
+      <button
+        onClick={(e) => {
+          handleClick(e);
+        }}
+      >
+        Reload all img
+      </button>
       <Link
         to="/game"
         style={{ textDecoration: "none" }}
-        className={style.game}>
+        className={style.game}
+      >
         <button className={style.poke}>game opcional</button>
       </Link>
 
@@ -35,8 +90,53 @@ export default function Home() {
           <option value="All">all types</option>
         </select>
       </div>
+      <Paginado
+        pokemonsPerPage={pokemonsPerPage}
+        allPokemons={allPokemons.length}
+        paginado={paginado}
+        page={currentPage}
+      />
 
-      <div className={style.cards}></div>
+      <div className={style.cards}>
+        {currentPokemons.length ? (
+          typeof currentPokemons[0] === "object" ? (
+            currentPokemons.map((el) => {
+              return (
+                <div>
+                  <Link
+                    to={"/home/" + el.id}
+                    style={{ textDecoration: "none" }}
+                    key={el.id}
+                  >
+                    <Card
+                      name={el.name}
+                      types={el.types}
+                      img={el.img}
+                      id={el.id}
+                      weight={el.weight}
+                      height={el.height}
+                    />
+                  </Link>
+                </div>
+              );
+            })
+          ) : (
+            <div className={style.notfound}>
+              <img
+                src="images/notfound.png"
+                alt="Pokemon not found"
+                width="200px"
+              />
+              <span>{currentPokemons[0]} not found</span>
+            </div>
+          )
+        ) : (
+          <div className={style.loading}>
+            <img src="images/loading.gif" alt="Loading.." width="250px" />
+            <p className={style.loadingtext}>Loading...</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

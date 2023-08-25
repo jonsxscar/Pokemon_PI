@@ -6,11 +6,11 @@ module.exports = (sequelize) => {
   sequelize.define(
     "type",
     {
-      /*     id: {
+    /*   id: {
       type : DataTypes.INTEGER,
       primaryKey : true,
       autoIncrement : true
-    }, */
+    },  */
       name: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -18,7 +18,7 @@ module.exports = (sequelize) => {
       },
     },
     {
-      timestamps: false,
+      timestamps: false,// creo que en false me crea una tabla llamada types ojo
       freezeTableName: true,
     }
   );

@@ -1,6 +1,6 @@
-const {Type} = require('../db') //revisar este codigo
+const {Type} = require('../db') 
 const axios = require('axios')
-const { URL_API_TYPES} = process.env;//REVISAR SI FALTA EL / Y SI ESTA BIEN LA URL
+const { URL_API_TYPES} = process.env;
 ///usar un bulk create para los type de la api la primera vez, ya despues utilizar la base de datos con un find 
 const getTypes = async()=>{
     const typesdb = await Type.findAll()
@@ -11,8 +11,6 @@ const getTypes = async()=>{
     await Type.bulkCreate(types)
     return await Type.findAll()
     }
-
-
 }
 
 module.exports ={

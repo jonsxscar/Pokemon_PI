@@ -6,7 +6,7 @@ const { URL_API } = process.env;
 const getPokemonsDb = async () => {
   const response = await Pokemon.findAll({
     include: {
-      attributes: ["name"],
+      attributes: ['name'],
       model: Type,
       through: {
         attributes: [],
@@ -25,7 +25,6 @@ const getApiInfo = async () => {
   for(let i = 0 ; i < results.length ; i++){
     const pokes = await axios.get(results[i].url);
     const pokeInfo = pokes.data;
-
     pokemonInfo.push({
       id: pokeInfo.id,
       name: pokeInfo.name,
@@ -34,8 +33,8 @@ const getApiInfo = async () => {
   }
   return pokemonInfo;
 } */
-
-  // Función auxiliar para obtener información detallada de un pokemon
+//*check
+  // Función aux para obtener información detallada de un pokemon
   const fetchPokemonInfo = async (url) => {
     const response = await axios.get(url);
     const pokeInfo = response.data;
@@ -50,7 +49,6 @@ const getApiInfo = async () => {
       height: pokeInfo.height,
     };
   };
-
   // Creo un arreglo de promesas para obtener la información detallada de todos los pokemones recorriendo con map
   const pokemonPromises = results.map((result) => fetchPokemonInfo(result.url));
 
@@ -66,15 +64,16 @@ const getAllPokemons = async () => {
   const pokemonDb = await getPokemonsDb();
   return [...apiInfo, ...pokemonDb];
 };
-
-const getPokemonByName = async (name) => {
+//revisar
+const getPokemonByName = async (name) => {//realmente no hace falta el try y catch pero xd
   try {
-    const res = (await axios.get(`${URL_API}/${name.toLowerCase()}`)).data;
+    const resss = await axios.get(`${URL_API}/${name.toLowerCase()}`);
+    const res = resss.data
     const pokeInfo = {
       id: res.id,
       name: res.name,
       types: res.types.map((t) => t.type.name),
-      img: res.sprites.other["official-artwork"].front_default,
+      img: res.sprites.other['official-artwork'].front_default,
       weight: res.weight,
       height: res.height,
     };
@@ -83,17 +82,17 @@ const getPokemonByName = async (name) => {
     if (e.status === 404) return null; //considerar trhougt y un mensaje
   }
 };
-
+//*c
 const getPokemonById = async (id) => {
   if (isNaN(id)) { //si es numero busco en DB, si no en api
     const response = await Pokemon.findOne({ where: { id } });
     return response;
-  }
+  }//else
   const res = (await axios.get(`${URL_API}/${id}`)).data;
   return {
     id: res.id,
     name: res.name,
-    img: res.sprites.other.dream_world.front_default,
+    img: res.sprites.other['official-artwork'].front_default,
     hp: res.stats[0].base_stat,
     attack: res.stats[1].base_stat,
     defense: res.stats[2].base_stat,
@@ -101,7 +100,6 @@ const getPokemonById = async (id) => {
     height: res.height,
     weight: res.weight,
     types: res.types.map((t) => {
-      //otra forma de hacer el types.map
       return {
         name: t.type.name,
       };
@@ -116,10 +114,14 @@ const postPokemon = async(name,img,hp,attack,defense,speed,height,weight,type = 
   }
   const pokemon = await Pokemon.create({name,img,hp,attack,defense,speed,height,weight})
   const typee = type.split(',')
-  typee.map(async(t)=>{
+  typee.map(async(t)=>{ //busco
       const types = await Type.findOne({where: {name: t}})
+      console.log(types)
       pokemon.addType(types)
   })
+  console.log("Tipos asociados al Pokémon:", await pokemon.getTypes());
+  console.log(pokemon)
+  console.log("holamundo")
   return pokemon
 }
 

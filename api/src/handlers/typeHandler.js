@@ -1,5 +1,4 @@
 const {getTypes} = require('../controllers/typeControllers')
-//revisar
 const getTypesHandler = async(req,res)=>{
     try {
         const types = await getTypes()
