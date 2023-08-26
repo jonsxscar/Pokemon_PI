@@ -31,6 +31,13 @@ function rootReducer(state = initialState, action) {
         pokemons: sortedArrayNormal,
       };
 
+      case "GET_POKEMON_NAME":
+        return {
+            ...state,
+            pokemons: action.payload,
+            
+        }  
+
     default:
       return state;
   }

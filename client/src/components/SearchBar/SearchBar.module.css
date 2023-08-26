@@ -11,7 +11,7 @@
  
  .searchBtn {
    cursor: pointer;
-   border: none;
+   /* border: none; */
    color:rgb(255, 255, 255);
    float: right;
    width: 40px;

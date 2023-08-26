@@ -29,10 +29,7 @@ export default function Home() {
   const [pokemonsPerPage, setPokemonsPerPage] = useState(12);
   const indexOfLastPokemon = currentPage * pokemonsPerPage;
   const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage;
-  const currentPokemons = allPokemons.slice(
-    indexOfFirstPokemon,
-    indexOfLastPokemon
-  );
+  const currentPokemons = allPokemons.slice(indexOfFirstPokemon,indexOfLastPokemon);
 
   const paginado = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -90,6 +87,7 @@ export default function Home() {
           <option value="All">all types</option>
         </select>
       </div>
+
       <Paginado
         pokemonsPerPage={pokemonsPerPage}
         allPokemons={allPokemons.length}

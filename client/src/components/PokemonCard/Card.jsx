@@ -7,7 +7,7 @@ export default function Card({ name, types, img, id, weight, height}){
     if(id >= 1 && id <= 100){
         sprite = true
     } */
-    console.log(img, name, types,id)
+    //console.log(img, name, types,id)
 
     const typesColors={
         fire: style.fire,

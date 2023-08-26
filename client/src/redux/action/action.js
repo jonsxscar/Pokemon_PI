@@ -51,7 +51,7 @@ export function getPokemonName(name){
 
             return dispatch({
                 type:"GET_POKEMON_NAME",
-                payload: json.data
+                payload: [json.data]
             })
         } catch(error){
             console.log(error)
