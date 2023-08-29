@@ -31,12 +31,23 @@ function rootReducer(state = initialState, action) {
         pokemons: sortedArrayNormal,
       };
 
-      case "GET_POKEMON_NAME":
-        return {
-            ...state,
-            pokemons: action.payload,
-            
-        }  
+    case "GET_POKEMON_NAME":
+      return {
+        ...state,
+        pokemons: action.payload,
+      };
+
+    case "REMOVE_DETAILS":
+      return {
+        ...state,
+        detail: [],
+      };
+
+    case "GET_DETAILS":
+      return {
+        ...state,
+        detail: action.payload,
+      };
 
     default:
       return state;

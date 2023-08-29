@@ -34,9 +34,10 @@ export default function SearchBar(){
     const dispatch = useDispatch()
     const [ name, setName ] = useState("")
 
+    //Evita que el formulario se envíe al presionar Enter
     function handleInputChange(e){
         e.preventDefault();
-        setName(e.target.value.replaceAll(/^\s+/g, "").replaceAll(/\s+/g, " "))
+        setName(e.target.value.replaceAll(/^\s+/g, "").replaceAll(/\s+/g, " ")) //space
     }
 
     function handleSubmit(e){
