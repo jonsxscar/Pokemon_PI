@@ -52,6 +52,24 @@ export default function Home() {
     dispatch(reloadPokemons());
   }
 
+
+  //se complica
+
+  function handleFilterCreated(e){
+    dispatch(filterCreated(e.target.value))
+}
+
+function handleFilterByType(e){
+    dispatch(filterPokemonsByType(e.target.value));
+}
+
+function handleSort(e){
+    e.preventDefault();
+    dispatch(orderByNameOrStrengh(e.target.value));
+    setCurrentPage(1);
+    setOrden(`Ordenado ${e.target.value}`)
+}
+
   return (
     <div className={style.home}>
       <Navbar />
@@ -62,29 +80,35 @@ export default function Home() {
       >
         Reload all img
       </button>
-      <Link
+
+    {/*   <Link
         to="/game"
         style={{ textDecoration: "none" }}
         className={style.game}
       >
         <button className={style.poke}>game opcional</button>
-      </Link>
+      </Link> */}
 
       <div className={style.sortfilter}>
-        <select>
+        <select onChange={e => handleSort(e)}>
           <option value="normal">Normal</option>
           <option value="asc">A - Z</option>
           <option value="desc">Z - A</option>
           <option value="HAttack">Highest Attack</option>
           <option value="LAttack">Lowest Attack</option>
         </select>
-        <select>
+        <select onChange={e => handleFilterCreated(e)}>
           <option value="All">All</option>
           <option value="Api">API</option>
           <option value="Created">Created</option>
         </select>
-        <select>
+        <select onChange={e => handleFilterByType(e)}>
           <option value="All">all types</option>
+          {
+                        types.map( type => (
+                            <option value={type.name} key={type.name}>{type.name}</option>
+                        ))
+                    }
         </select>
       </div>
 

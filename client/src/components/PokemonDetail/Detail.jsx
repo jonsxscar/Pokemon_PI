@@ -63,6 +63,7 @@ export default function Detail() {
             <ul className="list">
               <img src={detail.img} alt="poki" />
               <li className="item">name: {detail.name}</li>
+              <li className="item">id: {detail.id}</li>
               <li className="item">Weight: {detail.weight}</li>
               <li className="item">Height: {detail.height}</li>
               <li className="item">hp: {detail.hp}</li>
