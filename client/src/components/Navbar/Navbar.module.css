@@ -1,6 +1,6 @@
 .nav{
     height: 10vh;
-    background-color: #1C1D23;
+    background-color: #0d1b2a;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -9,6 +9,13 @@
     padding-right: 5%;
 }
 
+.logo{
+    transition: all 0.5s ease;
+}
+
+.logo:hover{
+    transform: scale(1.2);
+}
 
 /* Button Style */
 .create{
@@ -16,25 +23,22 @@
     outline: none;
     text-decoration: none;
     border: none;
+    background: none;
 
-    padding: 16px 32px;
-    color: #fff;
-    font-family: 'Roboto', Arial;
-    font-size: 16px;
-    font-weight: 500;
-    letter-spacing: .5px;
+    padding: 4px 8px;
+    color: #ffcb05ff; /*por si no sale el webkit*/
+    -webkit-text-fill-color: rgb(255, 238, 5); /* Relleno transparente */
+    -webkit-text-stroke: 2px rgb(79, 120, 207); /* Borde azul */
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 35px;
+
+    font-weight: bold;
+    letter-spacing: 0.5px;
     line-height: 1;
     border-radius: 8px;
-
-    background-image: linear-gradient(45deg, #2378c9 10%, #133079 90%);
-    background-position: 90% 0;
-    background-size: 200% 200%;
-    box-shadow: 0 2px 8px -1px #09113f;
-
     transition: all 0.5s ease;
 }
 
 .create:hover {
-    box-shadow: 0 0px 0px 0 rgba(0, 40, 120, 0);
-    background-position: 0 0;
+    transform: scale(1.2);
 }

@@ -15,6 +15,7 @@ import {
 } from "../../redux/action/action";
 //import random from "../../images/random.png";
 import style from "./HomePage.module.css";
+import poke from "../../images/bolaPokemon.png";
 //import game from "../../images/game.png";
 
 export default function Home() {
@@ -77,8 +78,9 @@ function handleSort(e){
         onClick={(e) => {
           handleClick(e);
         }}
+        className={style.poke}
       >
-        Reload all img
+        <img src={poke} alt="pokebola" width="20px" /> Reload all
       </button>
 
     {/*   <Link

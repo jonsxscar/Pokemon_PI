@@ -8,8 +8,8 @@ export default function Navbar() {
   return (
     <nav className={style.nav}>
       <Link to="/">
-        <span className={style.landinglink}>
-          <img
+        <span >
+          <img className= {style.logo}
             id="logoPoke"
             src={logohome}
             width="120"
@@ -19,7 +19,7 @@ export default function Navbar() {
       </Link>
       <SearchBar />
       <Link to="/pokemons">
-        <button className={style.create}>Create</button>
+        <button className={style.create}>You PoKeMoN</button>
       </Link>
     </nav>
   );

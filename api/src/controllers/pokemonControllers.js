@@ -42,8 +42,8 @@ const getApiInfo = async () => {
       id: pokeInfo.id,
       name: pokeInfo.name,
       types: pokeInfo.types.map((t) => t.type.name),
-      img: pokeInfo.sprites.other.home.front_default,
-      //img: pokeInfo.sprites.versions["generation-v"]["black-white"].animated.front_default, son gif baja calidad
+      //img: pokeInfo.sprites.other.home.front_default,
+      img: pokeInfo.sprites.versions["generation-v"]["black-white"].animated.front_default, 
       attack: pokeInfo.stats[1].base_stat,
       //defense: pokeInfo.stats[2].base_stat,
       weight: pokeInfo.weight,
