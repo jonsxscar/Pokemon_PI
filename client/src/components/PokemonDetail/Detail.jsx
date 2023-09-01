@@ -2,11 +2,12 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-//import './details.css'
+import style from "./Detail.module.css";
 import { getDetail } from "../../redux/action/action";
 import { Link } from "react-router-dom";
+import poke from "../../images/bolaPokemon.png";
 
-export default function Detail() {
+export default function Detail({ types }) {
   const dispatch = useDispatch();
   const { id } = useParams();
   const detail = useSelector((state) => state.detail);
@@ -15,69 +16,82 @@ export default function Detail() {
     dispatch(getDetail(id));
   }, [id]);
 
-  /*   let barraHp = null;
-  let barraAttack = null;
-  let barraDefense = null;
-  let barraSpeed = null; */
+  const typesColors = {
+    fire: style.fire,
+    normal: style.normal,
+    fighting: style.fighting,
+    flying: style.flying,
+    ground: style.ground,
+    poison: style.poison,
+    rock: style.rock,
+    bug: style.bug,
+    ghost: style.ghost,
+    steel: style.steel,
+    water: style.water,
+    grass: style.grass,
+    electric: style.electric,
+    psychic: style.psychic,
+    ice: style.ice,
+    dragon: style.dragon,
+    dark: style.dark,
+    fairy: style.fairy,
+    unknown: style.unknown,
+    shadow: style.shadow,
+  };
 
   if (detail) {
-    let porcentajeHp = (detail.hp / 255) * 100;
-    let porcentajeAttack = (detail.attack / 255) * 100;
-    let porcentajeDefense = (detail.defense / 255) * 100;
-    let porcentajeSpeed = (detail.speed / 255) * 100;
-
-    /*     barraHp = React.CSSProperties = {
-      "--bar-value": porcentajeHp.toString() + "%",
-    };
-    barraAttack = React.CSSProperties = {
-      "--bar-value": porcentajeAttack.toString() + "%",
-    };
-    barraDefense = React.CSSProperties = {
-      "--bar-value": porcentajeDefense.toString() + "%",
-    };
-    barraSpeed = React.CSSProperties = {
-      "--bar-value": porcentajeSpeed.toString() + "%",
-    };
-  } */
+    const detailTypes = detail.types
+      ? detail.types.map((type) => type.name)
+      : [];
 
     return (
-      <div>
-        <div className="container-title-details">
-          <h1 className="details_title">POKEMON DETAILS</h1>
-        </div>
+      <div className={style.containerAll}>
+        <Link to="/home">
+          <button className={style.poke}>
+          <img src={poke} alt="pokebola" width="20px" /> Back 
+          </button>
+        </Link>
 
-        <div className="container_details">
-          <div>
-            <img
-              className="details_image"
-              src="https://vignette.wikia.nocookie.net/doblaje/images/c/c2/Ash_Ketchum_BW.png/revision/latest?cb=20161002052941&path-prefix=es"
-              alt="ashe"
-              height="80px"
-            />
+        <div className={style.containerDetail}>
+          <div className={style.containerImg}>
+            <h1 className={`${style.titleImg} ${typesColors[detailTypes[0]]}`}>{detail.name ? detail.name.toUpperCase() : ""}</h1>
+            <img src={detail.img} alt="poki" width="400em" />
           </div>
-        </div>
 
-        <div className="details_stats">
           <div>
-            <span className="stats_title">Measures</span>
-            <ul className="list">
-              <img src={detail.img} alt="poki" />
-              <li className="item">name: {detail.name}</li>
-              <li className="item">id: {detail.id}</li>
-              <li className="item">Weight: {detail.weight}</li>
-              <li className="item">Height: {detail.height}</li>
-              <li className="item">hp: {detail.hp}</li>
-              <li className="item">speed: {detail.speed}</li>
-              <li className="item">attack: {detail.attack}</li>
-              <li className="item">defense: {detail.defense}</li>
-              <li className="item">
-                tipos:{" "}
-                {detail.types
-                  ? detail.types.map((type) => type.name).join(", ")
-                  : "No types available"}
-              </li>
-            </ul>
-            <Link to='/home'><button>Back</button></Link>
+            <h1 className={`${style.titleDetails} ${typesColors[detailTypes[0]]}`}>POKEMON DETAILS</h1>
+
+            <div className={style.about}>
+              <span className={style.subTitle}>About</span>
+              <ul>
+                <li className={style.list}>DATE: {detail.date} </li>
+                <li className={style.list}>ID: {detail.id}</li>
+                <li className={style.list}>HAPPINESS: {detail.happiness}</li>
+                <li className={style.list}>CAPTURE RATE: {detail.capture} </li>
+                <li
+                  className={`${style.typetitle} ${
+                    typesColors[detailTypes[0]]
+                  }`}
+                >
+                  TYPES:{" "}
+                  {detail.types
+                    ? detail.types.map((type) => type.name).join(", ")
+                    : "No types available"}
+                </li>
+              </ul>
+            </div>
+
+            <div className={style.stats}>
+            <span className={style.subTitle}>Stats</span>
+              <ul>
+                <li className={style.list}>HP: {detail.hp}</li>
+                <li className={style.list}>ATTACK: {detail.attack}</li>
+                <li className={style.list}>DEFENSE: {detail.defense}</li>
+                <li className={style.list}>SPEED: {detail.speed}</li>
+                <li className={style.list}>WEIGHT: {detail.weight / 10}kg</li>
+                <li className={style.list}>HEIGHT: {detail.height / 10}m</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

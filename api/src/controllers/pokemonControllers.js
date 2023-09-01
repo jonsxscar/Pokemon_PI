@@ -90,6 +90,11 @@ const getPokemonById = async (id) => {
     return response;
   }//else
   const res = (await axios.get(`${URL_API}/${id}`)).data;
+
+  const resSpecie = await axios.get(res.species.url);
+  const specieData = resSpecie.data;
+  const allDescriptions = specieData["flavor_text_entries"].filter( el => el.language.name === 'en')
+
   return {
     id: res.id,
     name: res.name,
@@ -100,6 +105,9 @@ const getPokemonById = async (id) => {
     speed: res.stats[5].base_stat,
     height: res.height,
     weight: res.weight,
+    date : allDescriptions[1]['flavor_text'].replace('POKéMON', 'Pokémon'),
+    happiness: specieData['base_happiness'],
+    capture: specieData['capture_rate'],
     types: res.types.map((t) => {
       return {
         name: t.type.name,

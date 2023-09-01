@@ -16,7 +16,6 @@ import {
 //import random from "../../images/random.png";
 import style from "./HomePage.module.css";
 import poke from "../../images/bolaPokemon.png";
-//import game from "../../images/game.png";
 
 export default function Home() {
   const dispatch = useDispatch();

@@ -25,30 +25,6 @@ export default function Card({ name, types, img, weight, height }) {
     shadow: style.shadow,
   };
 
-  const typesCard = {
-    fire: style.fire,
-    normal: style.normal,
-    fighting: style.fighting,
-    flying: style.flying,
-    ground: style.ground,
-    poison: style.poison,
-    rock: style.rock,
-    bug: style.bug,
-    ghost: style.ghost,
-    steel: style.steel,
-    water: style.water,
-    grass: style.grass,
-    electric: style.electric,
-    psychic: style.psychic,
-    ice: style.ice,
-    dragon: style.dragon,
-    dark: style.dark,
-    fairy: style.fairy,
-    unknown: style.unknown,
-    shadow: style.shadow,
-  }
-
-
   return (
     <div
       className={style.card}
