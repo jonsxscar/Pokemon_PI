@@ -105,7 +105,7 @@ const getPokemonById = async (id) => {
     speed: res.stats[5].base_stat,
     height: res.height,
     weight: res.weight,
-    date : allDescriptions[1]['flavor_text'].replace('POKéMON', 'Pokémon'),
+    date : allDescriptions[10]['flavor_text'].replace('POKéMON', 'Pokémon'),
     happiness: specieData['base_happiness'],
     capture: specieData['capture_rate'],
     types: res.types.map((t) => {
@@ -125,12 +125,9 @@ const postPokemon = async(name,img,hp,attack,defense,speed,height,weight,type = 
   const typee = type.split(',')
   typee.map(async(t)=>{ //busco
       const types = await Type.findOne({where: {name: t}})
-      console.log(types)
       pokemon.addType(types)
   })
   console.log("Tipos asociados al Pokémon:", await pokemon.getTypes());
-  console.log(pokemon)
-  console.log("holamundo")
   return pokemon
 }
 

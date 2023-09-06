@@ -16,6 +16,8 @@ import {
 //import random from "../../images/random.png";
 import style from "./HomePage.module.css";
 import poke from "../../images/bolaPokemon.png";
+import notFound from "../../images/notfound.png"
+import loading from "../../images/loading.gif";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -23,13 +25,14 @@ export default function Home() {
   const all = useSelector((state) => state.allPokemons);
   const types = useSelector((state) => state.types);
 
-  const [pokLoaded, setPokLoaded] = useState(all.length ? true : false);
+  //variables de orden y paginacion basicamente
+  const [pokLoaded, setPokLoaded] = useState(all.length ? true : false); //si all es = vacio, pokloaded es false, else true
   const [orden, setOrden] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pokemonsPerPage, setPokemonsPerPage] = useState(12);
+  const [currentPage, setCurrentPage] = useState(1); // valor 1
+  const [pokemonsPerPage, setPokemonsPerPage] = useState(12); //valor 12
   const indexOfLastPokemon = currentPage * pokemonsPerPage;
   const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage;
-  const currentPokemons = allPokemons.slice(indexOfFirstPokemon,indexOfLastPokemon);
+  const currentPokemons = allPokemons.slice(indexOfFirstPokemon,indexOfLastPokemon); //contendrá los Pokémon desde la posición 0 (el primer Pokémon) hasta la posición 11 (el Pokémon número 12) en el array allPokemons
 
   const paginado = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -52,9 +55,6 @@ export default function Home() {
     dispatch(reloadPokemons());
   }
 
-
-  //se complica
-
   function handleFilterCreated(e){
     dispatch(filterCreated(e.target.value))
 }
@@ -66,14 +66,14 @@ function handleFilterByType(e){
 function handleSort(e){
     e.preventDefault();
     dispatch(orderByNameOrStrengh(e.target.value));
-    setCurrentPage(1);
+    setCurrentPage(1); // que siga manteniendo la pag 1 despues del order
     setOrden(`Ordenado ${e.target.value}`)
 }
 
   return (
     <div className={style.home}>
       <Navbar />
-      <button
+      <button //boton de recargar pokemon
         onClick={(e) => {
           handleClick(e);
         }}
@@ -81,14 +81,6 @@ function handleSort(e){
       >
         <img src={poke} alt="pokebola" width="20px" /> Reload all
       </button>
-
-    {/*   <Link
-        to="/game"
-        style={{ textDecoration: "none" }}
-        className={style.game}
-      >
-        <button className={style.poke}>game opcional</button>
-      </Link> */}
 
       <div className={style.sortfilter}>
         <select onChange={e => handleSort(e)}>
@@ -121,8 +113,8 @@ function handleSort(e){
       />
 
       <div className={style.cards}>
-        {currentPokemons.length ? (
-          typeof currentPokemons[0] === "object" ? (
+        {currentPokemons.length ? ( //verifica si contiene algo
+          typeof currentPokemons[0] === "object" ? ( //verifica si es un objeto
             currentPokemons.map((el) => {
               return (
                 <div>
@@ -143,19 +135,19 @@ function handleSort(e){
                 </div>
               );
             })
-          ) : (
-            <div className={style.notfound}>
+          ) : (//si currentPokemons no contiene nada
+            <div className={style.notfound}> 
               <img
-                src="images/notfound.png"
+                src={notFound}
                 alt="Pokemon not found"
-                width="200px"
+                width="150px"
               />
-              <span>{currentPokemons[0]} not found</span>
+              <span>{currentPokemons[0]} not found :'c</span>
             </div>
           )
-        ) : (
+        ) : (//mensaje de carga
           <div className={style.loading}>
-            <img src="images/loading.gif" alt="Loading.." width="250px" />
+            <img src={loading} alt="Loading.." width="250px" />
             <p className={style.loadingtext}>Loading...</p>
           </div>
         )}
@@ -164,9 +156,3 @@ function handleSort(e){
   );
 }
 
-/* me falta crear las accions y estas funcionalidades...
- segun yo deberia crear para ordenar osea filtrar por orden, tipos y creados.
-   tambien otra accion que me obtenga los pokemones, otra que me de los tipos, otra para crear (post) los pokemones
-otra para los nombres de los pokemones (aunque aqui me toca averiguar), otra para obtener los detalles del pokemon.
-   toca hacer el componente de cartas y el css, igual del detail y el de la creacion del pokemon.
-*de momento el mini juego lo veo dificil de aplicar asi que quizas lo descarte */

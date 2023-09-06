@@ -26,18 +26,18 @@ export default function Card({ name, types, img, weight, height }) {
   };
 
   return (
-    <div
+    <div  //fondo de las cartas, dinamicas por tipo
       className={style.card}
       style={{ backgroundImage: `url(images/typesbkgm/${types[0]}.png)` }} 
       
     >
       <span className={style.name}>
-        {name.charAt(0).toUpperCase() + name.slice(1)}
+        {name.toUpperCase()} {/* mayuscula a los nombres */}
       </span>
 
-      <img src={img} alt="Img not found" height="130px" className={style.img} />
+      <img src={img} alt="Img not found" height="135px" className={style.img} />
 
-      <span className={`${style.typetitle} ${typesColors[types[0]]}`}>
+      <span className={`${style.typetitle} ${typesColors[types[0]]}`}> {/* color dinamico a word types */}
         Types
       </span>
       <div className={style.types}>
@@ -56,8 +56,9 @@ export default function Card({ name, types, img, weight, height }) {
           <span>Types not found</span>
         )}
         {/* <span>{types}</span> */}
+
       </div>
-      <span className={`${style.aboutitle} ${typesColors[types[0]]}`}>
+      <span className={`${style.aboutitle} ${typesColors[types[0]]}`}> {/* color dinamico a word about */}
         About
       </span>
       <div className={style.about}>

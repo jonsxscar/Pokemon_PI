@@ -1,22 +1,22 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 import style from "./Detail.module.css";
 import { getDetail } from "../../redux/action/action";
 import { Link } from "react-router-dom";
 import poke from "../../images/bolaPokemon.png";
 
-export default function Detail({ types }) {
+export default function Detail() {
   const dispatch = useDispatch();
-  const { id } = useParams();
+  const { id } = useParams(); //Permite acceder a los valores de los parámetros definidos en las rutas de tu aplicación.
   const detail = useSelector((state) => state.detail);
 
   useEffect(() => {
     dispatch(getDetail(id));
   }, [id]);
 
-  const typesColors = {
+  const typesColors = { //colores interactivos al type del pokemon
     fire: style.fire,
     normal: style.normal,
     fighting: style.fighting,
@@ -41,10 +41,10 @@ export default function Detail({ types }) {
 
   if (detail) {
     const detailTypes = detail.types
-      ? detail.types.map((type) => type.name)
+      ? detail.types.map((type) => type.name) //sin condicional me arroja error por estar vacio al inicio
       : [];
 
-    return (
+    return (//boton de back al home
       <div className={style.containerAll}>
         <Link to="/home">
           <button className={style.poke}>

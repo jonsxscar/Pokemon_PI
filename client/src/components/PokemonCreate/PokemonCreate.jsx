@@ -2,7 +2,8 @@ import React,{useEffect} from 'react'
 import { useState} from 'react'
 import { useDispatch, useSelector} from 'react-redux';
 import { postPokemon,getTypes } from '../../redux/action/action';
-import './PokemonCreate.module.css'
+import { Link } from "react-router-dom";
+
 
 const stringRegExp = /^[a-zA-Z]{1,20}$/;
 const numberRegExp = /^([1-9][0-9]{0,2}|1000)$/;
@@ -11,7 +12,7 @@ const urlRegExp = /(http|https?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._~#=]{2,256}\.[a-z
 const validate= (state,name)=>{
   let error = {}
   if(name ==='name'){
-    if(state.name == '') error.name = 'El pokemon debe tener un nombre'
+    if(state.name === '') error.name = 'El pokemon debe tener un nombre'
     if(state.name !== '' && !stringRegExp.test(state.name)){error.name = 'El nombre no debe contener cosas raras'}
     if(state.name.split('').map((leter)=>{if(Number(leter))error.name ='El nombre no debe contener numeros'})){}
   }
@@ -30,8 +31,8 @@ const Formulario = () => {
     attack:1,
     defense:1,
     speed:1,
-    height:1,
-    weight:1,
+    height: '',
+    weight: '',
     img:'',
     types:[],
   });
@@ -154,6 +155,11 @@ const Formulario = () => {
                 <input value={state.name} placeholder='Name' type="text" name='name' onChange={handleChange}/>
                 <p className='errors'>{errors && errors.name}</p>
               </div>
+              <Link to="/home">
+          <button>
+           Back 
+          </button>
+        </Link>
             </div>
             <div className='name-img'>
               <div className='back'>
