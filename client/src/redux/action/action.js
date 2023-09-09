@@ -34,12 +34,16 @@ export function getTypes(){
 
 export function postPokemon(payload){
     return async function(dispatch){
+        try {
         const pokemon = await axios.post("http://localhost:3001/pokemons", payload)
-        
-        return {
+        alert('usuario creado correctamente')
+        return ({
             type:"POST_POKEMON",
             payload: pokemon
-        }
+        })
+    } catch (error) {
+        alert(error.message)
+    }
     }
 }
 

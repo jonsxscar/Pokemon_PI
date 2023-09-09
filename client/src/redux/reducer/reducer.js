@@ -115,7 +115,7 @@ function rootReducer(state = initialState, action) {
           return 0;
         });
       }
-      if (action.payload === "normal") { //areglar 
+      if (action.payload === "normal") { 
         const apiPokes = state.pokemons
           .filter((el) => !el.createdInDb)
           .sort(function (a, b) {
@@ -127,7 +127,7 @@ function rootReducer(state = initialState, action) {
             }
             return 0;
           });
-        const dbPokes = state.pokemons //arreglar
+        const dbPokes = state.pokemons 
           .filter((el) => el.createdInDb)
           .sort(function (a, b) {
             if (a.id > b.id) {

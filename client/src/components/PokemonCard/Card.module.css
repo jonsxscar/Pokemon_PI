@@ -16,13 +16,9 @@
   }
 
 .card:hover{
-  transform: translateY(-12px);
+  transform: scale(1.03);
+
 } 
-
-
-.background{
-  
-}
 
 .name{
   grid-column: x0 / x1;

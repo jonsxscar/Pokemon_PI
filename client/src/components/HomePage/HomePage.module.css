@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
 
+::-webkit-scrollbar {
+    width: 13px; /* Ancho de la barra de desplazamiento */
+    background-color: #333; /* Color de fondo de la barra de desplazamiento */
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #f7f9faaf; /* Color del pulgar de la barra de desplazamiento */
+    border-radius: 5px; /* Radio de borde del pulgar */
+  }
+
 .cards {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -30,6 +39,10 @@
     font-weight: 500;
 }
 
+.poke:hover{
+    transform: scale(1.14);
+    transition: all 0.5s ease;
+}
 
 .sortfilter{
     display: flex;

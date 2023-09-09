@@ -21,18 +21,6 @@ const getApiInfo = async () => {
   const apiUrl = await axios.get(`${URL_API}?limit=100`);
   const results = apiUrl.data.results;
 
-  /*   const pokemonInfo = []
-  for(let i = 0 ; i < results.length ; i++){
-    const pokes = await axios.get(results[i].url);
-    const pokeInfo = pokes.data;
-    pokemonInfo.push({
-      id: pokeInfo.id,
-      name: pokeInfo.name,
-      etc
-    });
-  }
-  return pokemonInfo;
-} */
 //*check
   // Función aux para obtener información detallada de un pokemon
   const fetchPokemonInfo = async (url) => {
@@ -123,13 +111,17 @@ const postPokemon = async(name,img,hp,attack,defense,speed,height,weight,type = 
   }
   const pokemon = await Pokemon.create({name,img,hp,attack,defense,speed,height,weight})
   const typee = type.split(',')
-  typee.map(async(t)=>{ //busco
+  console.log('este es typee',typee)
+  typee.map(async(t)=>{
       const types = await Type.findOne({where: {name: t}})
       pokemon.addType(types)
   })
-  console.log("Tipos asociados al Pokémon:", await pokemon.getTypes());
+
+  // const typee = await Type.findOne({where: {name: type}})
+  // pokemon.addType(typee)
   return pokemon
 }
+
 
 module.exports = {
   getAllPokemons,

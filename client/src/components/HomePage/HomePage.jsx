@@ -53,6 +53,7 @@ export default function Home() {
   function handleClick(e) {
     e.preventDefault();
     dispatch(reloadPokemons());
+    dispatch(getPokemons())
   }
 
   function handleFilterCreated(e){

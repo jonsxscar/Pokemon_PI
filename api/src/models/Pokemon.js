@@ -43,6 +43,11 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       defaultValue: '50'
     },
+    createdInDb: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
+    },
   },
   {
     timestamps: false, 

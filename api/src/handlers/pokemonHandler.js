@@ -8,6 +8,7 @@ const getPokemonNameHandler = async (req,res) =>{
             const response = await getPokemonByName(name)
              return res.status(200).json(response)
         }
+        
         const response = await getAllPokemons()
         res.status(200).json(response)
     } catch (error) {
@@ -33,7 +34,6 @@ const postPokemonHandler = async (req,res) =>{
     } catch (error) {
         res.status(400).json({error: error.message})
     }
-    console.log(postPokemonHandler)
 }
 
 
