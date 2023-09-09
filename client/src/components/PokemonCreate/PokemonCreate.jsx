@@ -107,7 +107,7 @@ const Formulario = () => {
     if (
       state.types.filter((type) => type.name === e.target.value).length === 0
     ) {
-      let newType = { name: e.target.value };
+      let newType = { "name": e.target.value };
       setState({
         ...state,
         types: [...state.types, newType],
@@ -158,6 +158,10 @@ const Formulario = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+     // Convierte los tipos seleccionados en una cadena separada por comas
+
+
     if (
       state.img &&
       state.name &&
@@ -166,7 +170,15 @@ const Formulario = () => {
       state.types.length > 0 &&
       Object.keys(errors).length === 0
     ) {
-      dispatch(postPokemon(state));
+      // Llama a la función postPokemon con typesString en lugar de state.types
+      const type = state.types.map((type) => type.name).join(',');
+      console.log(state.types)
+      console.log(type)
+      const modifiedState = { ...state, type };
+      delete modifiedState.types; // Elimina la propiedad "types"
+      dispatch(
+        postPokemon(modifiedState)
+      );
     } else {
       alert("Please complete the form correctly before submitting.");
     }
@@ -323,11 +335,11 @@ const Formulario = () => {
               </div>
           </div>
         </div>
-        
-      </form>
-      <div className={style.contboton}>
+        <div className={style.contboton}>
       <input className={style.botonc} value="Create" type="submit" />
       </div>
+      </form>
+     
     </div>
   );
 };

@@ -4,17 +4,24 @@ const { URL_API } = process.env;
 
 //obtener los pokemones de la base de datos
 const getPokemonsDb = async () => {
-  const response = await Pokemon.findAll({
+	const data = (await Pokemon.findAll({ 
     include: {
-      attributes: ['name'],
       model: Type,
+      attributes: ['name'],
       through: {
         attributes: [],
-      },
-    },
+      }
+    }
+  })).map(pokemon => {
+    const json = pokemon.toJSON();
+    return{
+      ...json,
+      types: json.types.map( type => type.name)
+    }
   });
-  return response;
-};
+  
+  return data
+}
 
 //obtener los 100 pokemones de la API
 const getApiInfo = async () => {
@@ -51,7 +58,8 @@ const getApiInfo = async () => {
 const getAllPokemons = async () => {
   const apiInfo = await getApiInfo();
   const pokemonDb = await getPokemonsDb();
-  return [...apiInfo, ...pokemonDb];
+  const lol = [...apiInfo, ...pokemonDb];
+  return lol;
 };
 //revisar
 const getPokemonByName = async (name) => {//realmente no hace falta el try y catch pero xd
@@ -105,22 +113,52 @@ const getPokemonById = async (id) => {
 };
 
 //lo creo en la base de datos
-const postPokemon = async(name,img,hp,attack,defense,speed,height,weight,type = 'unknown')=>{
+const postPokemon = async (name, img, hp, attack, defense, speed, height, weight, type = 'unknown') => {
+  if (!name || !img || !hp || !attack || !defense) {
+    throw Error('Campos obligatorios están vacíos');
+  }
+  console.log(type)
+  const pokemon = await Pokemon.create({
+    name,
+    img,
+    hp,
+    attack,
+    defense,
+    speed,
+    height,
+    weight,
+    type,
+  });
+  console.log(type)
+  const typee = type.split(',');
+  console.log('Este es typee', typee);
+
+  for (const t of typee) {
+    const type = await Type.findOne({ where: { name: t } });
+    if (type) {
+      await pokemon.addType(type);
+    }
+  }
+
+  return pokemon;
+};
+
+
+/* const postPokemon = async(name,img,hp,attack,defense,speed,height,weight,type = 'unknown')=>{
   if(!name || !img || !hp || !attack || !defense ){
       throw Error('Campos obligatorios estan vacios')
   }
-  const pokemon = await Pokemon.create({name,img,hp,attack,defense,speed,height,weight})
+  const pokemon = await Pokemon.create({name,img,hp,attack,defense,speed,height,weight, type})
   const typee = type.split(',')
   console.log('este es typee',typee)
   typee.map(async(t)=>{
       const types = await Type.findOne({where: {name: t}})
+      console.log("este es types",types)
+      console.log("este es typee",typee)
       pokemon.addType(types)
   })
-
-  // const typee = await Type.findOne({where: {name: type}})
-  // pokemon.addType(typee)
   return pokemon
-}
+} */
 
 
 module.exports = {
