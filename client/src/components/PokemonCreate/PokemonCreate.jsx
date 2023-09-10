@@ -107,7 +107,7 @@ const Formulario = () => {
     if (
       state.types.filter((type) => type.name === e.target.value).length === 0
     ) {
-      let newType = { "name": e.target.value };
+      let newType = { name: e.target.value };
       setState({
         ...state,
         types: [...state.types, newType],
@@ -159,8 +159,7 @@ const Formulario = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-     // Convierte los tipos seleccionados en una cadena separada por comas
-
+    // Convierte los tipos seleccionados en una cadena separada por comas
 
     if (
       state.img &&
@@ -171,14 +170,12 @@ const Formulario = () => {
       Object.keys(errors).length === 0
     ) {
       // Llama a la función postPokemon con typesString en lugar de state.types
-      const type = state.types.map((type) => type.name).join(',');
-      console.log(state.types)
-      console.log(type)
+      const type = state.types.map((type) => type.name).join(",");
+      console.log(state.types);
+      console.log(type);
       const modifiedState = { ...state, type };
       delete modifiedState.types; // Elimina la propiedad "types"
-      dispatch(
-        postPokemon(modifiedState)
-      );
+      dispatch(postPokemon(modifiedState));
     } else {
       alert("Please complete the form correctly before submitting.");
     }
@@ -204,10 +201,10 @@ const Formulario = () => {
       <form className={style.form} onSubmit={handleSubmit}>
         <div className={style.container1}>
           <div>
-          <img src={create} alt="crear" width="250em" />
+            <img src={create} alt="crear" width="250em" />
           </div>
           <div className={style.stats}>
-          <div>
+            <div>
               <label>Types </label>
               <select
                 defaultValue="0"
@@ -228,7 +225,11 @@ const Formulario = () => {
               {state.types.map((type, index) => (
                 <div key={index}>
                   <span>{type.name[0].toUpperCase() + type.name.slice(1)}</span>
-                  <button value={type.name} onClick={handlerClose} className={style.close}> 
+                  <button
+                    value={type.name}
+                    onClick={handlerClose}
+                    className={style.close}
+                  >
                     X
                   </button>
                 </div>
@@ -236,54 +237,53 @@ const Formulario = () => {
             </div>
 
             <div>
-            <span>HP</span>
-            <input
-              type="range"
-              name="hp"
-              onChange={onChangeRange}
-              min={1}
-              max={255}
-              value={state.hp}
-            />
-            
-          </div>
-          <span>{state.hp}</span>
-          <div>
-            <span>DEFENSE</span>
-            <input
-              type="range"
-              name="defense"
-              onChange={onChangeRange}
-              min={1}
-              max={255}
-              value={state.defense}
-            /> 
-          </div>
-          <span>{state.defense}</span>
-          <div>
-            <span>ATTACK</span>
-            <input
-              type="range"
-              name="attack"
-              onChange={onChangeRange}
-              min={1}
-              max={255}
-              value={state.attack}
-            />
-          </div>
-          <span>{state.attack}</span>
-          <div>
-            <span>SPEED</span>
-            <input
-              type="range"
-              name="speed"
-              onChange={onChangeRange}
-              min={1}
-              max={255}
-              value={state.speed}
-            />
-          </div>
-          <span>{state.speed}</span>
+              <span>HP</span>
+              <input
+                type="range"
+                name="hp"
+                onChange={onChangeRange}
+                min={1}
+                max={255}
+                value={state.hp}
+              />
+            </div>
+            <span>{state.hp}</span>
+            <div>
+              <span>DEFENSE</span>
+              <input
+                type="range"
+                name="defense"
+                onChange={onChangeRange}
+                min={1}
+                max={255}
+                value={state.defense}
+              />
+            </div>
+            <span>{state.defense}</span>
+            <div>
+              <span>ATTACK</span>
+              <input
+                type="range"
+                name="attack"
+                onChange={onChangeRange}
+                min={1}
+                max={255}
+                value={state.attack}
+              />
+            </div>
+            <span>{state.attack}</span>
+            <div>
+              <span>SPEED</span>
+              <input
+                type="range"
+                name="speed"
+                onChange={onChangeRange}
+                min={1}
+                max={255}
+                value={state.speed}
+              />
+            </div>
+            <span>{state.speed}</span>
           </div>
         </div>
 
@@ -312,34 +312,33 @@ const Formulario = () => {
               <p>{errors && errors.img}</p>
             </div>
             <div>
-                <label>Height </label>
-                <input
-                  value={state.height}
-                  placeholder="1  ⇄  999"
-                  type="text"
-                  name="height"
-                  onChange={handleChange}
-                />
-                <p>{errors && errors.height}</p>
-              </div>
-              <div>
-                <label>Weight </label>
-                <input
-                  value={state.weight}
-                  placeholder="1  ⇄  999"
-                  type="text"
-                  name="weight"
-                  onChange={handleChange}
-                />
-                <p>{errors && errors.weight}</p>
-              </div>
+              <label>Height </label>
+              <input
+                value={state.height}
+                placeholder="1  ⇄  999"
+                type="text"
+                name="height"
+                onChange={handleChange}
+              />
+              <p>{errors && errors.height}</p>
+            </div>
+            <div>
+              <label>Weight </label>
+              <input
+                value={state.weight}
+                placeholder="1  ⇄  999"
+                type="text"
+                name="weight"
+                onChange={handleChange}
+              />
+              <p>{errors && errors.weight}</p>
+            </div>
           </div>
         </div>
         <div className={style.contboton}>
-      <input className={style.botonc} value="Create" type="submit" />
-      </div>
+          <input className={style.botonc} value="Create" type="submit" />
+        </div>
       </form>
-     
     </div>
   );
 };

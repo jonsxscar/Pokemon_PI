@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useEffect} from "react";
+import { useEffect } from "react";
 import style from "./Detail.module.css";
 import { getDetail } from "../../redux/action/action";
 import { Link } from "react-router-dom";
@@ -16,7 +16,8 @@ export default function Detail() {
     dispatch(getDetail(id));
   }, [id]);
 
-  const typesColors = { //colores interactivos al type del pokemon
+  const typesColors = {
+    //colores interactivos al type del pokemon
     fire: style.fire,
     normal: style.normal,
     fighting: style.fighting,
@@ -44,22 +45,29 @@ export default function Detail() {
       ? detail.types.map((type) => type.name) //sin condicional me arroja error por estar vacio al inicio
       : [];
 
-    return (//boton de back al home
+    return (
+      //boton de back al home
       <div className={style.containerAll}>
         <Link to="/home">
           <button className={style.poke}>
-          <img src={poke} alt="pokebola" width="20px" /> Back 
+            <img src={poke} alt="pokebola" width="20px" /> Back
           </button>
         </Link>
 
         <div className={style.containerDetail}>
           <div className={style.containerImg}>
-            <h1 className={`${style.titleImg} ${typesColors[detailTypes[0]]}`}>{detail.name ? detail.name.toUpperCase() : ""}</h1>
+            <h1 className={`${style.titleImg} ${typesColors[detailTypes[0]]}`}>
+              {detail.name ? detail.name.toUpperCase() : ""}
+            </h1>
             <img src={detail.img} alt="poki" width="400em" />
           </div>
 
           <div>
-            <h1 className={`${style.titleDetails} ${typesColors[detailTypes[0]]}`}>POKEMON DETAILS</h1>
+            <h1
+              className={`${style.titleDetails} ${typesColors[detailTypes[0]]}`}
+            >
+              POKEMON DETAILS
+            </h1>
 
             <div className={style.about}>
               <span className={style.subTitle}>About</span>
@@ -82,7 +90,7 @@ export default function Detail() {
             </div>
 
             <div className={style.stats}>
-            <span className={style.subTitle}>Stats</span>
+              <span className={style.subTitle}>Stats</span>
               <ul>
                 <li className={style.list}>HP: {detail.hp}</li>
                 <li className={style.list}>ATTACK: {detail.attack}</li>
