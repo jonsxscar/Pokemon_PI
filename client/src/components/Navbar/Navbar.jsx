@@ -17,9 +17,9 @@ export default function Navbar() {
           />
         </span>
       </Link>
-      <SearchBar />
-      <Link to="/pokemons">
-        <button className={style.create}>You PoKeMoN</button>
+      <SearchBar /> 
+      <Link to="/pokemons"> 
+        <button className={style.create}>You PoKeMoN</button> 
       </Link>
     </nav>
   );

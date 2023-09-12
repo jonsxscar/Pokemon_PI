@@ -29,7 +29,7 @@ const getPokemonsDbDetail = async () => { //por alguna razon detail necesita typ
   const data = (
     await Pokemon.findAll({
       include: {
-        model: Type,
+        model: Type, //incluyen tipos asociados a pokemon 
         attributes: ["name"],
         through: {
           attributes: [],
@@ -37,10 +37,10 @@ const getPokemonsDbDetail = async () => { //por alguna razon detail necesita typ
       },
     })
   ).map((pokemon) => {
-    const json = pokemon.toJSON();
+    const json = pokemon.toJSON(); //transform a json
     return {
       ...json,
-      types: json.types.map((type) => type),
+      types: json.types.map((type) => type), //contiene nombres de tipos
     };
   });
 
@@ -207,7 +207,7 @@ const postPokemon = async (
   for (const t of typee) {
     const type = await Type.findOne({ where: { name: t } });
     if (type) {
-      await pokemon.addType(type);
+      await pokemon.addType(type); //agrega el tipo a pokemon si lo encuentra
     }
   }
 

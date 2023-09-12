@@ -7,8 +7,8 @@ import style from "./PokemonCreate.module.css";
 import poke from "../../images/bolaPokemon.png";
 import create from "../../images/created.png";
 
-const stringRegExp = /^[a-zA-Z]{1,20}$/;
-const numberRegExp = /^([1-9][0-9]{0,2}|1000)$/;
+const stringRegExp = /^[a-zA-Z]{1,20}$/; //valida cadena de textos aA y del 1 al 20
+const numberRegExp = /^([1-9][0-9]{0,2}|1000)$/; //numeros entre 1 y 999
 
 // Función para validar la entrada del formulario
 const validate = (state, name) => {
@@ -18,7 +18,7 @@ const validate = (state, name) => {
     if (state.name !== "" && !stringRegExp.test(state.name)) {
       error.name = "The Pokémon shouldn't have signs.";
     }
-    if (state.name.split("").some((letter) => !isNaN(parseInt(letter, 10)))) {
+    if (state.name.split("").some((letter) => !isNaN(parseInt(letter, 10)))) { //"p" "i" "k" "a" "c" "h" "u"
       error.name = "The name not contain numbers";
     }
   }
@@ -52,11 +52,11 @@ const Formulario = () => {
     types: "",
   });
 
-  useEffect(() => {
+  useEffect(() => { //obtengo los tipos de pokemon
     dispatch(getTypes());
   }, []);
 
-  function handleClick() {
+  function handleClick() { //btn back
     dispatch(getPokemons());
   }
 
@@ -102,10 +102,10 @@ const Formulario = () => {
   };
 
   function handleChangeType(e) {
-    if (e.target.value === "0") return;
+    if (e.target.value === "0") return;  //0 === no hay select
 
     if (
-      state.types.filter((type) => type.name === e.target.value).length === 0
+      state.types.filter((type) => type.name === e.target.value).length === 0 //Si la longitud de la lista de tipos con el mismo nombre que el valor seleccionado es igual a 0, significa que este valor aún no ha sido seleccionado anteriormente
     ) {
       let newType = { name: e.target.value };
       setState({
@@ -123,7 +123,7 @@ const Formulario = () => {
         )
       );
 
-      if (state.types.length === 2 - 1) {
+      if (state.types.length === 1) { //1 = 2 types 
         e.target.disabled = true;
       }
     }
@@ -131,7 +131,7 @@ const Formulario = () => {
   }
 
   const handlerClose = (e) => {
-    let newTypes = state.types.filter((type) => type.name !== e.target.value);
+    let newTypes = state.types.filter((type) => type.name !== e.target.value); //esta lista contendrá todos los tipos que no tengan el mismo nombre que el valor del botón "X"
     setState({
       ...state,
       types: newTypes,
@@ -166,14 +166,21 @@ const Formulario = () => {
       state.name &&
       state.height &&
       state.weight &&
-      state.types.length > 0 &&
-      Object.keys(errors).length === 0
+      state.types.length > 0 && //seleccion de al menos 1 tipo
+      Object.keys(errors).length === 0 //si errors es igual a 1 f 
     ) {
       // Llama a la función postPokemon con typesString en lugar de state.types
       const type = state.types.map((type) => type.name).join(",");
       console.log(state.types);
       console.log(type);
-      const modifiedState = { ...state, type };
+      const modifiedHeight = parseInt(state.height) / 10;
+      const modifiedWeight = parseInt(state.weight) * 10;
+      const modifiedState = {
+        ...state,
+        type,
+        height: modifiedHeight,
+        weight: modifiedWeight,
+      };
       delete modifiedState.types; // Elimina la propiedad "types"
       dispatch(postPokemon(modifiedState));
     } else {

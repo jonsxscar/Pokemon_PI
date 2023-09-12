@@ -10,11 +10,11 @@ export default function LandingPage() {
 
   const [isHovered, setIsHovered] = useState(false);
 
-  const handleMouseEnter = () => {
+  const handleMouseEnter = () => { //activa cuando el cursor entra al elemento
     setIsHovered(true);
   };
 
-  const handleMouseLeave = () => {
+  const handleMouseLeave = () => { // lo contrario
     setIsHovered(false);
   };
 
@@ -36,7 +36,7 @@ export default function LandingPage() {
       <img
         src={landing}
         alt="pikachu"
-        className={`${style.landing} ${isHovered ? style.landingHovered : ''}`}
+        className={`${style.landing} ${isHovered ? style.landingHovered : ''}`} //si hovered is true se aplica css
         width="500px"
       />
     </div>
