@@ -47,7 +47,7 @@ export default function Home() {
   }, [pokLoaded, dispatch]);
 
   useEffect(() => {
-    setCurrentPage(1);
+    setCurrentPage(1); //si cambia lo de abajo se ejecuta sercurrenpage en 1
   }, [allPokemons.length, setCurrentPage]);
 
   function handleClick(e) {
@@ -69,6 +69,7 @@ function handleSort(e){
     dispatch(orderByNameOrStrengh(e.target.value));
     setCurrentPage(1); // que siga manteniendo la pag 1 despues del order
     setOrden(`Ordenado ${e.target.value}`)
+    console.log(orden);
 }
 
   return (
@@ -99,7 +100,7 @@ function handleSort(e){
         <select onChange={e => handleFilterByType(e)}>
           <option value="All">all types</option>
           {
-                        types.map( type => (
+                        types.map( type => ( //estado global
                             <option value={type.name} key={type.name}>{type.name}</option>
                         ))
                     }
@@ -107,10 +108,10 @@ function handleSort(e){
       </div>
 
       <Paginado
-        pokemonsPerPage={pokemonsPerPage}
-        allPokemons={allPokemons.length}
-        paginado={paginado}
-        page={currentPage}
+        pokemonsPerPage={pokemonsPerPage} //cantidad de Pokémon que se mostrarán por página
+        allPokemons={allPokemons.length} // Esta información se utiliza para calcular la cantidad total de páginas necesarias 
+        paginado={paginado} //esta función se llama con el número de página como argumento para cambiar la página actual.
+        page={currentPage} //Indica la página actual que se está mostrando.
       />
 
       <div className={style.cards}>

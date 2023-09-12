@@ -2,7 +2,7 @@ const { Pokemon, Type } = require("../db");
 const axios = require("axios");
 const { URL_API } = process.env;
 
-//obtener los pokemones de la base de datos
+//obtener los pokemones de la base de datos (name)
 const getPokemonsDb = async () => {
   const data = (
     await Pokemon.findAll({
@@ -19,6 +19,28 @@ const getPokemonsDb = async () => {
     return {
       ...json,
       types: json.types.map((type) => type.name),
+    };
+  });
+
+  return data;
+};
+
+const getPokemonsDbDetail = async () => { //por alguna razon detail necesita type y no type.name
+  const data = (
+    await Pokemon.findAll({
+      include: {
+        model: Type,
+        attributes: ["name"],
+        through: {
+          attributes: [],
+        },
+      },
+    })
+  ).map((pokemon) => {
+    const json = pokemon.toJSON();
+    return {
+      ...json,
+      types: json.types.map((type) => type),
     };
   });
 
@@ -58,6 +80,13 @@ const getApiInfo = async () => {
   return pokemonInfo;
 };
 
+const getAllPokemons = async () => {
+  const apiInfo = await getApiInfo();
+  const pokemonDb = await getPokemonsDb();
+  const all = [...apiInfo, ...pokemonDb];
+  return all;
+};
+
 //lo use para obteneer name del getpomeondb... sin esto no busca name de pokemon en DB
 const getPokemonFromDbByName = async (name) => {
   const allPokemonFromDb = await getPokemonsDb();
@@ -66,13 +95,14 @@ const getPokemonFromDbByName = async (name) => {
   return foundPokemon || null;
 };
 
-const getAllPokemons = async () => {
-  const apiInfo = await getApiInfo();
-  const pokemonDb = await getPokemonsDb();
-  const all = [...apiInfo, ...pokemonDb];
-  return all;
+const getPokemonFromDbById = async (id) => {
+  const allPokemonFromDb = await getPokemonsDbDetail();
+  const foundPokemon = allPokemonFromDb.find((pokemon) => pokemon.id === id);
+
+  return foundPokemon || null;
 };
-//revisar
+
+
 const getPokemonByName = async (name) => {
   try {
     // Primero, intentamos buscar en la base de datos local
@@ -103,10 +133,16 @@ const getPokemonByName = async (name) => {
 //*c
 const getPokemonById = async (id) => {
   if (isNaN(id)) {
-    //si no es numero busco en DB, si es un numero en api
-    const response = await Pokemon.findOne({ where: { id } });
-    return response;
-  } //else
+    // Si no es número, busca en la base de datos local por ID
+    const pokemonFromDb = await getPokemonFromDbById(id);
+
+    if (pokemonFromDb) {
+      // Si se encuentra en la base de datos local, retorna los datos
+      return pokemonFromDb;
+    }
+  }
+
+  // Si no se encuentra en la base de datos local o si es un número, consulta la API externa
   const res = (await axios.get(`${URL_API}/${id}`)).data;
 
   const resSpecie = await axios.get(res.species.url);
@@ -135,6 +171,7 @@ const getPokemonById = async (id) => {
     }),
   };
 };
+
 
 //lo creo en la base de datos
 const postPokemon = async (
