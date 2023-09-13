@@ -173,8 +173,8 @@ const Formulario = () => {
       const type = state.types.map((type) => type.name).join(",");
       console.log(state.types);
       console.log(type);
-      const modifiedHeight = parseInt(state.height) / 10;
-      const modifiedWeight = parseInt(state.weight) * 10;
+      const modifiedHeight = parseInt(state.height);
+      const modifiedWeight = parseInt(state.weight);
       const modifiedState = {
         ...state,
         type,

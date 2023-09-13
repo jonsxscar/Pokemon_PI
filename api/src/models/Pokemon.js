@@ -11,7 +11,7 @@ module.exports = (sequelize) => {
       primaryKey: true,
     },
     name: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING, //tiene un limite
       allowNull: false,
       unique: true, // evito que haya dos nombres iguales de pokemon
     },
